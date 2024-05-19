@@ -1,0 +1,53 @@
+<style>
+  .page-form{
+    background-color: #6fbbfe;
+  }
+</style>
+<div style="margin: 5px; margin-top: 0px; border-top: 1px solid white; ">
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="col-8"></div>
+        <div class="col-4"><button type="submit" class="btn btn-sm btn-info btn-refresh hide">
+          <i class="fa fa-refresh" style="font-size:18px;padding:2px;">{{ __(" Refresh") }}</i>
+        </button>
+      </div>
+      </div>
+    </div>
+    <h4>{{ __("Payment entries") }}</h4>
+    <div class="container" style="width:100%;">
+      <div class="row">
+        <div class="col-2" style="width:25%">
+          <p id="update_selected"></p>
+        </div>
+        <div class="col">
+          <p id = "total_selected_amount"></p>
+        </div>
+      </div>
+    </div>
+    <div class="payment-table">
+
+    </div>
+    <div class="section-body">
+      <div class="row">
+          <div class="col-4">
+            <button type="submit" class="btn btn-sm btn-primary btn-create-file">{{ __("Create Payment File") }}</button>
+          </div>
+          <div class="col-2 mb-5">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-column col-sm-4">
+          <div class="creation-log-messages"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insert-log-messages"></div>
+  </div>
+<hr>
+
+<button type="button" class="btn btn-sm btn-primary btn-validate">Validate</button>
+<div class="missing_data">
+
+</div>

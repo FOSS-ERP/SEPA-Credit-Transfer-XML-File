@@ -1,0 +1,19 @@
+{
+ "content": null,
+ "creation": "2024-04-06 17:14:14.230837",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2024-04-06 17:14:14.230837",
+ "modified_by": "Administrator",
+ "module": "Sepa Payment",
+ "name": "payment-export",
+ "owner": "Administrator",
+ "page_name": "payment-export",
+ "roles": [],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Payment Export"
+}

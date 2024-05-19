@@ -1,0 +1,49 @@
+<style>
+	.ontop{
+		border-top: 1px solid black !important;
+	}
+	.onbottom{
+		border-bottom: 1px solid black !important;
+	}
+	.onright{
+		border-right: 1px solid black;
+	}
+	.onleft{
+		border-left: 1px solid black;
+	}
+</style>
+<table  class="table">
+	<tr>
+		<th class="ontop" ><input type="checkbox" class="selectall" onclick="selectunselect()"></th>
+		<th class="ontop" >{{ __("Payment") }}</th>
+		<th class="ontop" >{{ __("Posting date") }}</th>
+		<th class="ontop" >{{ __("Amount") }}</th>
+		<th class="ontop" >{{ __("Party Name") }}</th>
+		<th class="ontop" >{{ __("Purchase Invoice") }}</th>
+		<th class="ontop" >{{ __("Account") }}</th>
+	</tr>
+	{% for payment in payments %}
+	<tr>
+		<td class="ontop onbottom"><input class="inputcheck" type="checkbox" id="chk{{ payment.name }}" name="{{ payment.name }}" onclick=getfindSelected()></td>
+		<td class="ontop onbottom"><a href="/desk/Form/Payment Entry/{{ payment.name }}">{{ payment.name }}</a></td>
+		<td class="ontop onbottom">{{ payment.posting_date }}</td>
+		<td class="ontop onbottom">{{ payment.paid_to_account_currency }}&nbsp;{{ payment.total_allocated_amount }}</td>
+		<td class="ontop onbottom"><a href="/desk/Form/Supplier/{{ payment.party }}">{{ payment.party_name }}</a></td>
+		{% if payment.reference_name|length > 1 %}
+		<td class="ontop onbottom">{% for row in payment.reference_name %}<p><a href="/desk/Form/Purchase Invoice/{{ row }}">{{ row }}</a></p>, {% endfor%}</td>
+		{% else %}
+		<td class="ontop onbottom">{% for row in payment.reference_name %}<p><a href="/desk/Form/Purchase Invoice/{{ row }}">{{ row }}</a></p> {% endfor%}</td>
+		{% endif %}
+		<td class="ontop onbottom">{{ payment.paid_from }}</td>
+	</tr>
+	{% endfor %}
+	<tr>
+		<td></td>
+		<td></td>
+		<td><b>Total Amount</b></td>
+		<td><b>{{ payment.paid_to_account_currency }}&nbsp;{{ total_paid_amount }}</b></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+</table>
