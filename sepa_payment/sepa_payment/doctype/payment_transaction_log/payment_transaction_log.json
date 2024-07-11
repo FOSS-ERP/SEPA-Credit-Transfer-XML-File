@@ -10,7 +10,8 @@
   "payment_entry",
   "supplier",
   "paid_amount",
-  "status"
+  "status",
+  "ignore_to_submit_payment_entry"
  ],
  "fields": [
   {
@@ -39,12 +40,19 @@
    "in_list_view": 1,
    "label": "Status",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "ignore_to_submit_payment_entry",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Ignore To Submit Payment Entry"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-04-25 12:26:06.284214",
+ "modified": "2024-07-11 11:57:23.249694",
  "modified_by": "Administrator",
  "module": "Sepa Payment",
  "name": "Payment Transaction Log",

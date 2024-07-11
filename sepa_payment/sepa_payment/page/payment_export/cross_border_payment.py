@@ -5,7 +5,7 @@ from collections import defaultdict
 import time
 #from erpnextswiss.erpnextswiss.common_functions import get_building_number, get_street_name, get_pincode, get_city
 import html              # used to escape xml content
-from frappe.utils import flt, get_link_to_form, getdate, nowdate, now
+from frappe.utils import flt, get_link_to_form, getdate, now, nowdate, get_url
 from datetime import datetime
 
 def get_cross_border_xml_file(payments ,company , posting_date , payment_type, bank_account):
@@ -92,13 +92,14 @@ def get_cross_border_xml_file(payments ,company , posting_date , payment_type, b
 	content += make_line("          <DbtrAcct>")
 	content += make_line("              <Id>")
 	iban = None
+	bank_bic = None
 	if payment_type in ["Cross Border Payments (USD)", "Cross Border Payments (EUR)", "Cross Border Payments (OTHER)"]:
 		bank_account = frappe.get_doc('Bank Account', bank_account)
 		iban = bank_account.iban
 		bank_bic = bank_account.branch_code or frappe.db.get_value("Bank", bank_account.bank, 'swift_number')
-		
+	url = get_url()
 	if not iban: 
-		frappe.throw("Please update <b>'Iban For Cross Border Payment'</b> in {0}".format(f"<a href='https://erpnext-skf-9150.frappe.cloud/app/payment-export-settings/{payment_export_settings}'>Payment Export Settings</a>"))
+		frappe.throw("Please update <b>'Iban For Cross Border Payment'</b> in {0}".format(f"<a href='{url}/app/bank-account/{bank_account.name}'>Bank Account</a>"))
 	
 	content += make_line("                  <IBAN>{0}</IBAN>".format(iban))
 	content += make_line("              </Id>")

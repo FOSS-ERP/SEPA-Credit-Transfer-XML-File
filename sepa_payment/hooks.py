@@ -116,13 +116,11 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Payment Entry": {
+		"on_submit": "sepa_payment.sepa_payment.doctype.payment_export_log.payment_export_log.payment_entry_submit",
+	}
+}
 
 # Scheduled Tasks
 # ---------------

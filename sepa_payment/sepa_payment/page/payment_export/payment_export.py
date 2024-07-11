@@ -16,6 +16,10 @@ from sepa_payment.sepa_payment.page.payment_export.cross_border_payment import g
 
 @frappe.whitelist()
 def generate_xml_file(payments,  posting_date, company, payment_type, bank_account = None):
+	current_time = now()
+	original_date = datetime.strptime(str(current_time), '%Y-%m-%d %H:%M:%S.%f')
+	formatted_date = original_date.strftime('%Y-%m-%d %H-%M-%S')
+	formatted_date = formatted_date.replace(' ','-')
 	if payment_type != "SEPA (EUR)":
 		content, transaction_count, control_sum = get_cross_border_xml_file(payments, company, posting_date, payment_type, bank_account)
 		# gen_payment_export_log(content, transaction_count, control_sum, payments, currency=None)
@@ -36,7 +40,7 @@ def get_payments(company, payment_type):
 			From `tabPayment Entry` as pe
 			Left Join `tabPayment Entry Reference` as per ON per.parent = pe.name
 			left join `tabBank Account` as ba ON ba.party_type = pe.party_type and ba.party = pe.party
-			Where pe.docstatus = 0 and pe.payment_type = "Pay" and pe.xml_file_generated = 0 and ba.iban is not null
+			Where pe.docstatus = 0 and pe.payment_type = "Pay" and pe.xml_file_generated = 0
 			and pe.paid_from_account_currency = 'EUR' and pe.company = '{company}'
 			order by posting_date
 		""",
@@ -344,22 +348,22 @@ def get_payment_info(payments, group_header, posting_date):
 
 
 def get_supplier_iban_no(party):
-	iban = frappe.db.sql(
+	bank = frappe.db.sql(
 		f"""
-		Select iban, name From `tabBank Account` where party_type = 'Supplier' and party = '{party}' and iban is not null
+		Select iban, bban, name From `tabBank Account` where party_type = 'Supplier' and party = '{party}'
 	""",
 		as_dict=1,
 	)
-	if not iban:
+	if not bank:
 		frappe.throw("Please create bank account for supplier <b>{0}</b>".format(party))
-	if iban:
-		if not iban[0].get("iban"):
+	if bank:
+		if not (bank[0].get("iban") or bank[0].get('bban')):
 			frappe.throw(
-				"Please update a iban number in bank account <b>{0}</b>".format(
-					get_link_to_form("Bank Account", iban[0].get("name"))
+				"Please update a iban number or bban number in bank account <b>{0}</b>".format(
+					get_link_to_form("Bank Account", bank[0].get("name"))
 				)
 			)
-		return iban[0].iban
+		return bank[0].iban if bank[0].get('iban') else bank[0].bban 
 	return ""
 
 
