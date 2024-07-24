@@ -1,0 +1,19 @@
+{
+ "content": null,
+ "creation": "2024-07-17 05:02:34.625347",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2024-07-24 13:39:58.668931",
+ "modified_by": "Administrator",
+ "module": "Sepa Payment",
+ "name": "bulk-payment-run",
+ "owner": "Administrator",
+ "page_name": "bulk-payment-run",
+ "roles": [],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Payment Run"
+}

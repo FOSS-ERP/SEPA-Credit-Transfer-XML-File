@@ -1,0 +1,32 @@
+<style>
+    .ontop{
+        border-top: 1px solid black !important;
+    }
+    .onbottom{
+        border-bottom: 1px solid black !important;
+    }
+    .purchase_invoice_table{
+        margin: 0px !important;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2 pt-2">
+            <b id = "selectedCountDisplay"></b>
+        </div>
+        <div class="col-2">
+
+        </div>
+    </div>
+    <div class="purchase_invoice_table">
+
+    </div>
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary btn-create create-payment">
+                Create Payment Entries
+            </button>  
+            <button type="submit" class="btn btn-sm btn-primary btn-refresh hide">{{ __("Refresh") }}</button>          
+        </div>
+    </div>
+</div>

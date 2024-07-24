@@ -41,8 +41,8 @@ def submit_all_payment_entry(self : dict):
 
 
 #On submit of the payment entry
-
-def payment_entry_submit():
+@frappe.whitelist()
+def payment_entry_submit(self, method):
     if self.party_type == "Supplier" and self.payment_type == "Pay":
         if not (self.xml_file_generated):
             frappe.throw("XML file is not generated for this payment entry <b>{0}</b>.".format(self.name))
