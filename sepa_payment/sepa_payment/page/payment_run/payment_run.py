@@ -35,7 +35,6 @@ from erpnext.setup.utils import get_exchange_rate
 def get_purchase_invoice(orderby, payment_type, due_date=None, payable_account=None, bank_account=None ):
 	settings = frappe.get_doc("Payment Run Setting")
 	
-	
 	if due_date:    
 		data = frappe.db.sql(f"""
 				Select 
@@ -51,7 +50,8 @@ def get_purchase_invoice(orderby, payment_type, due_date=None, payable_account=N
 				pi.status,
 				per.parent as payment_entry,
 				per.total_amount,
-				per.outstanding_amount
+				per.outstanding_amount,
+				per.docstatus
 				From `tabPurchase Invoice` as pi
 				Left Join `tabSupplier` as su On su.name = pi.supplier
 				left join `tabPayment Entry Reference` as per ON per.reference_name = pi.name and per.reference_doctype = "Purchase Invoice"
@@ -59,11 +59,16 @@ def get_purchase_invoice(orderby, payment_type, due_date=None, payable_account=N
 				Order By pi.due_date {orderby}
 		""",as_dict=1)
 		invoices = []
+
 		for row in data:
-			if row.status in ['Unpaid','Overdue'] and not row.payment_entry:
+			if row.payment_entry and row.docstatus == 0:
+				row.update({"docstatus" : "Draft"})
+			if row.payment_entry and row.docstatus == 1:
+				row.update({"docstatus" : "Submitted"})
+			if row.status in ['Unpaid','Overdue']:
 				if payment_type == row.payment_type:
 					invoices.append(row)
-			if row.status == "Partly Paid":
+			if row.status == 'Partly Paid':
 				if payment_type == row.payment_type:
 					invoices.append(row)
 		if payment_type in ["SEPA (EUR)", "Cross Border Payments (EUR)"]:

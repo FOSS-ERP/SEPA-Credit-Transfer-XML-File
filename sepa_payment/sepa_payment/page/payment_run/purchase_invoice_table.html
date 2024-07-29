@@ -1,3 +1,14 @@
+<style>
+.table td {
+        padding: .2rem;
+        vertical-align: bottom;
+    }
+.table th {
+    padding: .2rem;
+    vertical-align: bottom;
+}
+
+</style>
 <table class="table">
     <thead>
         <tr>
@@ -6,28 +17,39 @@
             <th>{{ __("Purchase Invoice") }}</th>
             <th>{{ __("Supplier Name") }}</th>
             <th>{{ __("Supplier Invoice No") }}</th>
+            <th>{{ __("PE Ref")}}</th>
             <th>{{ __("Grand Total") }}</th>
             <th>{{ __("Outstanding") }}</th>
-            <th>{{ __("Due Date") }}
+            <th>{{ __("Due Date") }}</th>
+            <th>
                     <button class="descending btn btn-default btn-sm btn-order" title="descending_">       
                                 &#8593;    
                     </button> 
                     <button class="ascending btn btn-default btn-sm btn-order" title="ascending_">
                                 &#8595;
                     </button>
-                    
-            </th>
+            </th>    
         </tr>
         {% for row in invoices %}
         <tr>
             <td class="ontop onbottom"><input class="inputcheck" type="checkbox" id="chk{{ row.name }}" name="{{ row.name }}" onclick=getfindSelected()></td>
             <td class="ontop onbottom" ><p>{{ row.status }}</p></td>
             <td class="ontop onbottom"><p><a href="/desk/Form/Purchase Invoice/{{ row.name }}">{{ row.name }}</a></p></td>
-            <td class="ontop onbottom" width="20%"><p><a href="/desk/Form/Supplier/{{ row.supplier }}">{{ row.supplier_name }}</a></p></td>
+            <td class="ontop onbottom" ><p><a href="/desk/Form/Supplier/{{ row.supplier }}">{{ row.supplier_name }}</a></p></td>
             <td class="ontop onbottom"><p>{{ row.bill_no }}</p></td>
+            {% if row.docstatus == "Draft" %}
+            <td class="ontop onbottom" style="background-color:rgb(252, 124, 124);"><p><a href="/desk/Form/Payment Entry/{{ row.payment_entry }}">{{ row.payment_entry }}</a></p></td>
+            {% endif %}
+            {% if row.docstatus == "Submitted" %}
+            <td class="ontop onbottom" style="background-color:rgb(42, 129, 236);"><p><a href="/desk/Form/Payment Entry/{{ row.payment_entry }}">{{ row.payment_entry }}</a></p></td>
+            {% endif %}
+            {% if not row.payment_entry %}
+            <td class="ontop onbottom"></td>
+            {% endif %}
             <td class="ontop onbottom" ><p>{{ row.currency }} {{ row.grand_total }}</p></td>
             <td class="ontop onbottom" ><p>{{ row.currency }} {{ row.panding_amount }}</p></td>
             <td class="ontop onbottom" ><p>{{ row.due_date }}</p></td>
+            <td></td>
         </tr>
         {% endfor %}
     </tbody>
