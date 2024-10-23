@@ -51,7 +51,7 @@ def get_payments(company, payment_type):
 									per.reference_name, pe.received_amount
 									From `tabPayment Entry` as pe 
 									Left Join `tabPayment Entry Reference` as per ON per.parent = pe.name
-									Where pe.docstatus = 1 and pe.payment_type = "Pay" and pe.party_type = "Supplier" and pe.xml_file_generated = 0 and pe.custom_include_in_xml_file = 1
+									Where pe.docstatus = 1 and pe.payment_type = "Pay" and pe.party_type = "Supplier" and pe.xml_file_generated = 0
 									order by posting_date
 									""",as_dict = 1)
 	
