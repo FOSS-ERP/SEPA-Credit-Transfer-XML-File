@@ -17,7 +17,7 @@ class PaymentExportLog(Document):
 
 
 @frappe.whitelist()
-def submit_all_payment_entry(self : dict):
+def submit_all_payment_entry(self):
     doc = json.loads(self)
     skipped = []
     log = frappe.get_doc('Payment Export Log', doc.get('name'))

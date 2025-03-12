@@ -1,5 +1,5 @@
 import frappe
-from vesta_si_erpnext.vesta_si_erpnext.page.payment_export.payment_export import make_line
+
 from frappe import throw, _
 from collections import defaultdict
 import time
@@ -239,3 +239,7 @@ def get_company_address(company):
 	address = addr_name = frappe.db.get_value('Dynamic Link', {"link_doctype":"Company", 'link_name':company, "parenttype":"Address" }, ['parent'])
 	company_add = frappe.get_doc('Address', address)
 	return company_add
+
+# adds Windows-compatible line endings (to make the xml look nice)
+def make_line(line):
+	return line + "\r\n"
